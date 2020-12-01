@@ -1,11 +1,9 @@
-#%%
 import numpy as np
 import numpy.testing as npt
 
 target = 2020
-# %%
 numbers = np.loadtxt("1/input")
-# %%
+
 def find_sum():
     for i,a in enumerate(numbers):
         for j,b in enumerate(numbers):
