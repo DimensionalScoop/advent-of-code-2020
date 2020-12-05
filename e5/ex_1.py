@@ -37,6 +37,7 @@ examples = {
 for code in examples:
     npt.assert_allclose(parse_code(code), examples[code])
 
-passes = open("e5/input").readlines()
-ids = [parse_code(p)[-1] for p in passes]
-print(max(ids))
+if __name__ == "__main__":
+    passes = open("e5/input").readlines()
+    ids = [parse_code(p)[-1] for p in passes]
+    print(max(ids))
