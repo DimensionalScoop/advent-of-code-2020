@@ -1,23 +1,14 @@
 import re
 import networkx as nx
+import matplotlib.pyplot as plt
+import numpy as np
 
 lines = [l.strip("\n") for l in open("e7/input").readlines()]
 
 graph = nx.DiGraph()
 
 
-def simple(r: str):
-    match = re.fullmatch(r"^(\w+ \w+) bags contain (\d+) (\w+ \w+) bags*.$", r)
-    if match is None:
-        return False
-
-    container, number, contents = match.groups()
-    graph.add_nodes_from([container, contents])
-    graph.add_edge(container, contents)
-    return True
-
-
-def multi(rule: str):
+def parse_bag_rule(rule: str):
     p_valid = r"^(\w+ \w+) bags contain (?:\d+ \w+ \w+ bags?,?\s?)+."
     p_contents = r"(\d+) (\w+ \w+) bags?[(?:, ).]"
 
@@ -25,7 +16,7 @@ def multi(rule: str):
     if match is None:
         return False
 
-    container = match.groups()
+    container = match.groups()[0]
     contents = re.findall(p_contents, rule)
 
     graph.add_node(container)
@@ -35,22 +26,40 @@ def multi(rule: str):
     return True
 
 
-parsers = [multi]
-
-
-def try_parse(line: str):
-    for p in parsers:
-        success = p(l)
-        if success:
-            return True
-    return False
+def parse_empty_bag_rules(rule: str):
+    pattern = r"^(\w+ \w+) bags contain no other bags.$"
+    color = re.findall(pattern, rule)[0]
+    assert len(list(graph.successors(color))) == 0
 
 
 remaining = []
 for _ in range(len(lines)):
     l = lines.pop(0)
-    success = try_parse(l)
+    success = parse_bag_rule(l)
     if not success:
         remaining.append(l)
 
-print(remaining[0])
+# remaining rules should be sanity checks
+# do them after assembling the whole graph
+for i in remaining:
+    parse_empty_bag_rules(i)
+
+
+def get_containers(content):
+    containers = list(graph.predecessors(content))
+
+    if containers == []:
+        return None
+    else:
+        c_of_containers = []
+        for c in containers:
+            parents = get_containers(c)
+            if parents is not None:
+                c_of_containers.extend(parents)
+    return containers + c_of_containers
+
+
+my_bag = "shiny gold"
+possible_containers = np.unique(list(get_containers(my_bag)))
+print(possible_containers)
+print(len(possible_containers))
