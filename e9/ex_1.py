@@ -1,6 +1,6 @@
 import numpy as np
 
-sequence = np.loadtxt("e9/input",dtype=int)
+sequence = np.loadtxt("e9/input", dtype=int)
 lookback = 25
 
 for i in range(lookback, len(sequence)):
@@ -12,9 +12,8 @@ for i in range(lookback, len(sequence)):
     additions = mat + mat.T
     np.fill_diagonal(additions, -100)  # we should combine two different numbers
 
-    num_valid = (
-        np.sum(additions == number) >= 2
-    )  # we do everything twice with these matrices
+    # we do everything twice with these matrices
+    num_valid = np.sum(additions == number) >= 2
     if not num_valid:
         break
 
