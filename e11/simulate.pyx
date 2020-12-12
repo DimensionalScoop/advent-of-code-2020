@@ -4,6 +4,8 @@ cimport numpy as np
 import numpy as np
 import numpy.testing as npt
 
+raise Exception("Out of date, simulate_python.py is newer")
+
 ctypedef np.uint8_t bol
 
 cdef bol EMPTY= 0
