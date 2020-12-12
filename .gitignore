@@ -6,6 +6,11 @@ __pycache__/
 # plots
 */plt/*.png
 
+# cython
+*.c
+# cython annotations
+*.html 
+
 # C extensions
 *.so
 
