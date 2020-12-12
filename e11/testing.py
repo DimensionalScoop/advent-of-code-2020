@@ -1,6 +1,6 @@
 import numpy as np
 import numpy.testing as npt
-from simulate_python import visual_neighbors,step
+from simulate_python import visual_neighbors, step
 from main import EMPTY, OCCUPIED, FLOOR
 from main import get_map, converters, draw_map
 
@@ -30,14 +30,14 @@ n = visual_neighbors(map, *pos)
 assert n == 0
 
 # step-by-step test
-files = ["test-sim/"+str(i) for i in range(7)]
-maps = [get_map(f,FLOOR) for f in files]
+files = ["test-sim/" + str(i) for i in range(7)]
+maps = [get_map(f, FLOOR) for f in files]
 last_map = None
-for i in range(len(maps)-1):
+for i in range(len(maps) - 1):
     this_map = maps[i]
-    next_map = maps[i+1]
+    next_map = maps[i + 1]
 
     copy = this_map.copy()
-    calc_map = step(this_map,False)
-    npt.assert_array_equal(copy,this_map)
-    npt.assert_array_equal(next_map,calc_map)
+    calc_map = step(this_map, False)
+    npt.assert_array_equal(copy, this_map)
+    npt.assert_array_equal(next_map, calc_map)

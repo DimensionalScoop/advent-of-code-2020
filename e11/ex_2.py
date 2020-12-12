@@ -19,7 +19,7 @@ while not np.array_equal(map, previous_map):
         plt.savefig("e11/plt/" + str(count_steps) + ".png")
         plt.clf()
 
-    previous_map = map
+    previous_map = map.copy()
     map = step(map,False)
     count_steps += 1
 
