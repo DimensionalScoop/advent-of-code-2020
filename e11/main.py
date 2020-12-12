@@ -18,3 +18,12 @@ def get_map(name, pad_with=None, converter=converters.full):
     if pad_with is not None:
         map = np.pad(map, 1, "constant", constant_values=(pad_with))
     return np.asarray(map, dtype=np.uint8)
+
+def draw_map(map,save_name=None,show=True):
+    plt.imshow(map, cmap="Accent", vmin=EMPTY, vmax=FLOOR)
+    plt.colorbar()
+    if save_name is not None:
+        plt.savefig("e11/plt/" + str(save_name) + ".png")
+    if show:
+        plt.show()
+    plt.clf()

@@ -3,11 +3,9 @@ import matplotlib.pyplot as plt
 import matplotlib.colors as colors
 import matplotlib.cm as cmx
 from main import EMPTY,OCCUPIED,FLOOR
-from main import get_map,converters
+from main import get_map,converters,draw_map
 from simulate_python import step
 
-#floor = get_map("input",False,converters.is_floor)
-#seats = get_map("input",EMPTY
 map = get_map("input",FLOOR)
 
 plot_steps = True
@@ -16,10 +14,7 @@ previous_map = None
 while not np.array_equal(map, previous_map):
     print(count_steps,end=" ")
     if plot_steps:
-        plt.imshow(map, cmap="Accent", vmin=EMPTY, vmax=FLOOR)
-        plt.colorbar()
-        plt.savefig("e11/plt/" + str(count_steps) + ".png")
-        plt.clf()
+        draw_map(map,str(count_steps),False)
 
     previous_map = map
     map = step(map)

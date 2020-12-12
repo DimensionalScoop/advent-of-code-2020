@@ -21,14 +21,24 @@ def neighbors(seats, x, y):
 
 def visual_neighbors(map, x, y):
     # get all seats in each direction
-    cardinals = [(1, 0), (0, 1), (-1, 0), (0, -1)]
-    diagonals = [(-1, -1), (1, 1), (-1, 1), (1, -1)]
+    directions = [
+        (1, 0),  # cardinal
+        (0, 1),
+        (-1, 0),
+        (0, -1),
+        (-1, -1),  # diagonal
+        (1, 1),
+        (-1, 1),
+        (1, -1),
+    ]
     n = 0
 
-    for d in np.array(cardinals + diagonals):
+    for d in directions:
         eye = np.array((x, y))
         while True:
-            eye += d
+            eye[0] += d[0]
+            eye[1] += d[1]
+
             if is_out_of_bounds(eye, map):
                 # if we reach the end of the array and touch no seats,
                 # there's no neighbor, so n+=0
@@ -36,7 +46,7 @@ def visual_neighbors(map, x, y):
             if map[tuple(eye)] == FLOOR:
                 continue
             if map[tuple(eye)] == EMPTY:
-                n += 0
+                # empty seat means no visible neighbor in this dir, n+=0
                 break
             if map[tuple(eye)] == OCCUPIED:
                 n += 1
