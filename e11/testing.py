@@ -1,6 +1,7 @@
 import numpy as np
 import numpy.testing as npt
-from simulate_python import visual_neighbors, step
+from simulate_python import neighbors, visual_neighbors, step
+import simulate as c_sim
 from main import EMPTY, OCCUPIED, FLOOR
 from main import get_map, converters, draw_map
 
@@ -9,6 +10,13 @@ pos = (5, 4)
 assert map[pos] == EMPTY
 n = visual_neighbors(map, *pos)
 assert n == 8
+
+c_n = c_sim.visual_neighbors(map, *pos)
+assert c_n == n
+
+c_n = c_sim.neighbors(map,*pos)
+n = neighbors(map,*pos)
+assert c_n==n
 
 
 map = get_map("test-2", FLOOR)
@@ -22,12 +30,18 @@ assert map[pos] == EMPTY
 n = visual_neighbors(map, *pos)
 assert n == 1
 
+c_n = c_sim.visual_neighbors(map, *pos)
+assert c_n == n
+
 
 map = get_map("test-3", FLOOR)
 pos = (4, 4)
 assert map[pos] == EMPTY
 n = visual_neighbors(map, *pos)
 assert n == 0
+
+c_n = c_sim.visual_neighbors(map, *pos)
+assert c_n == n
 
 # step-by-step test
 files = ["test-sim/" + str(i) for i in range(7)]
